@@ -1,0 +1,11 @@
+{
+  "name": "emt-44",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-01",
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "91230d82643242d5b64f2a544837620f"
+    }
+  ]
+}

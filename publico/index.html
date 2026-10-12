@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0072CE">
+<title>44</title>
+<style>
+  :root {
+    --azul: #0072CE;
+    --tinta: #0E1B2A;
+    --tinta-clara: #16283D;
+    --marfil: #F4F6F8;
+    --tenue: rgba(244, 246, 248, .62);
+    --linea: rgba(244, 246, 248, .18);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--tinta);
+    color: var(--marfil);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* La ida se lleva mas altura: es el dato que mas se consulta. */
+  body {
+    display: grid;
+    grid-template-rows: 1.3fr 1fr auto;
+    min-height: 100svh;
+  }
+
+  .tramo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1rem, 5vw, 1.8rem);
+  }
+  .tramo--ida { background: var(--azul); }
+  .tramo--vuelta { background: var(--tinta); }
+
+  .interior { width: 100%; max-width: 34rem; margin: 0 auto; }
+
+  .rumbo {
+    margin: 0 0 .5rem;
+    font-size: clamp(1rem, 4.4vw, 1.2rem);
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  .rumbo em { font-style: normal; font-weight: 700; font-size: 1.2em; }
+  .rumbo em::after {
+    content: "|";
+    margin: 0 .38em 0 .42em;
+    font-weight: 400;
+    color: var(--tenue);
+  }
+  .rumbo span {
+    display: block;
+    font-weight: 400;
+    font-size: .8em;
+    color: var(--tenue);
+  }
+  .tramo--vuelta .rumbo { margin-bottom: .35rem; }
+
+  /* --- Ida: un solo dato, a tamano completo --- */
+
+  .reloj {
+    display: flex;
+    align-items: baseline;
+    gap: .12em;
+    line-height: .82;
+  }
+  .reloj b {
+    font-size: clamp(5rem, 32vw, 8rem);
+    font-weight: 700;
+    letter-spacing: -.05em;
+  }
+  .reloj i {
+    font-style: normal;
+    font-size: clamp(1.05rem, 4.6vw, 1.4rem);
+    font-weight: 500;
+    color: var(--tenue);
+  }
+  .reloj.es-texto b {
+    font-size: clamp(1.9rem, 9.5vw, 2.8rem);
+    letter-spacing: -.02em;
+    line-height: 1.05;
+  }
+
+  .siguiente {
+    margin: .8rem 0 0;
+    border-top: 1px solid var(--linea);
+    padding-top: .7rem;
+    font-size: clamp(.95rem, 4vw, 1.05rem);
+    color: var(--tenue);
+  }
+  .siguiente b { font-weight: 600; color: var(--marfil); }
+  .siguiente.lejos b { font-weight: 500; color: var(--tenue); }
+
+  /* --- Vuelta: dos datos en columnas --- */
+
+  /* Las dos columnas comparten las mismas cuatro filas: etiqueta, hora,
+     numero y siguiente quedan alineados aunque una muestre una cifra
+     enorme y la otra una palabra. */
+  .pareja {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+  }
+  .pareja::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--linea);
+  }
+  .bloque { display: contents; }
+  .bloque--a > * {
+    grid-column: 1;
+    padding-right: clamp(.9rem, 4vw, 1.5rem);
+  }
+  .bloque--b > * {
+    grid-column: 2;
+    padding-left: clamp(.9rem, 4vw, 1.5rem);
+  }
+  /* La fila hay que fijarla a mano: el reparto automatico avanza y nunca
+     retrocede, asi que la segunda columna acabaria debajo de la primera. */
+  .bloque > *:nth-child(1) { grid-row: 1; }
+  .bloque > *:nth-child(2) { grid-row: 2; }
+  .bloque > *:nth-child(3) { grid-row: 3; }
+  .bloque > *:nth-child(4) { grid-row: 4; }
+  /* El numero se apoya en la base de su fila: asi una cifra y una
+     palabra de estado no se descuelgan una respecto de la otra. */
+  .reloj--medio { align-self: end; }
+  .bloque .siguiente { align-self: end; }
+
+  .etiqueta {
+    margin: 0 0 .1rem;
+    font-size: clamp(.95rem, 4vw, 1.1rem);
+    font-weight: 600;
+  }
+  .hora {
+    margin: 0;
+    font-size: clamp(.9rem, 3.8vw, 1rem);
+    color: var(--tenue);
+    min-height: 1.3em;
+  }
+  .reloj--medio b { font-size: clamp(3.2rem, 17vw, 4.6rem); }
+  .reloj--medio i { font-size: clamp(.85rem, 3.6vw, 1rem); }
+  .reloj--medio.es-texto b {
+    font-size: clamp(1.3rem, 6vw, 1.7rem);
+    line-height: 1.35;
+  }
+  .bloque .siguiente {
+    margin-top: .5rem;
+    padding-top: .45rem;
+    font-size: clamp(.82rem, 3.4vw, .95rem);
+  }
+
+  .aviso {
+    margin: .6rem 0 0;
+    display: inline-block;
+    padding: .2rem .5rem;
+    border: 1px solid var(--linea);
+    border-radius: 2px;
+    font-size: .8rem;
+    color: var(--tenue);
+  }
+  .aviso[hidden] { display: none; }
+
+  /* Datos viejos: se apaga todo, para que no engane. */
+  body.rancio .reloj,
+  body.rancio .hora,
+  body.rancio .siguiente { opacity: .38; }
+
+  .pie {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .6rem clamp(1rem, 5vw, 1.8rem);
+    padding-bottom: calc(.6rem + env(safe-area-inset-bottom));
+    background: var(--tinta-clara);
+    font-size: .82rem;
+    color: var(--tenue);
+  }
+  body.rancio .pie { background: #4A1D1D; color: var(--marfil); }
+  .pie button {
+    font: inherit;
+    color: var(--marfil);
+    background: none;
+    border: 1px solid var(--linea);
+    border-radius: 2px;
+    padding: .35rem .8rem;
+  }
+  .pie button:focus-visible { outline: 2px solid var(--marfil); }
+  .pie button[disabled] { opacity: .5; }
+</style>
+</head>
+<body>
+
+<section class="tramo tramo--ida" id="ida">
+  <div class="interior">
+    <p class="rumbo"><em>Ida</em>hacia Marqués de Viana<span>Rubio y Galí, parada 1670</span></p>
+    <div class="reloj"><b data-grande>—</b><i data-unidad></i></div>
+    <p class="siguiente" data-pequeno>Buscando autobuses</p>
+    <p class="aviso" data-aviso hidden></p>
+  </div>
+</section>
+
+<section class="tramo tramo--vuelta" id="vuelta">
+  <div class="interior">
+    <p class="rumbo"><em>Vuelta</em>hacia Callao<span>Marqués de Viana, cabecera</span></p>
+    <div class="pareja">
+
+      <div class="bloque bloque--a" id="llegadas">
+        <p class="etiqueta">Llega</p>
+        <p class="hora" data-hora></p>
+        <div class="reloj reloj--medio"><b data-grande>—</b><i data-unidad></i></div>
+        <p class="siguiente" data-pequeno>—</p>
+      </div>
+
+      <div class="bloque bloque--b" id="salidas">
+        <p class="etiqueta">Sale</p>
+        <p class="hora" data-hora></p>
+        <div class="reloj reloj--medio"><b data-grande>—</b><i data-unidad></i></div>
+        <p class="siguiente" data-pequeno>—</p>
+      </div>
+
+    </div>
+    <p class="aviso" data-aviso hidden></p>
+  </div>
+</section>
+
+<footer class="pie">
+  <span id="sello">Conectando</span>
+  <button type="button" id="refrescar">Actualizar</button>
+</footer>
+
+<script>
+const API = "/api/estado";
+const PERIODO = 30000;   // ms entre sondeos
+const HORIZONTE = 1200;  // 20 min: por encima no damos cifra exacta
+const RANCIO = 100000;   // ms sin datos frescos antes de apagar el panel
+
+let estado = null, recibido = 0, temporizador = null;
+const horaFijada = new Map();
+
+const nodos = {
+  ida: document.getElementById("ida"),
+  vuelta: document.getElementById("vuelta"),
+  llegadas: document.getElementById("llegadas"),
+  salidas: document.getElementById("salidas"),
+};
+
+const aMinutos = (s) => Math.ceil(s / 60);
+
+const hhmm = (f) => f.toLocaleTimeString("es-ES", {
+  hour: "2-digit", minute: "2-digit", timeZone: "Europe/Madrid",
+});
+
+function restantes(bus) {
+  return Math.max(0, Math.round(bus.segundos - (Date.now() - recibido) / 1000));
+}
+
+// La hora absoluta se fija al recibirla y solo se recalcula si la
+// estimacion se mueve mas de 90 s, para que el numero no baile.
+function horaFija(clave, segundos) {
+  const previa = horaFijada.get(clave);
+  const nueva = new Date(Date.now() + segundos * 1000);
+  if (previa && Math.abs(previa - nueva) < 90000) return previa;
+  horaFijada.set(clave, nueva);
+  return nueva;
+}
+
+function relojDe(nodo) {
+  const reloj = nodo.querySelector(".reloj");
+  const grande = nodo.querySelector("[data-grande]");
+  const unidad = nodo.querySelector("[data-unidad]");
+  return {
+    texto: (t) => { reloj.classList.add("es-texto"); grande.textContent = t; unidad.textContent = ""; },
+    cifra: (n) => { reloj.classList.remove("es-texto"); grande.textContent = n; unidad.textContent = "min"; },
+  };
+}
+
+// --- Ida: un dato, formato largo ---
+
+function pintarIda(datos) {
+  const nodo = nodos.ida;
+  const { texto, cifra } = relojDe(nodo);
+  const pequeno = nodo.querySelector("[data-pequeno]");
+  const aviso = nodo.querySelector("[data-aviso]");
+  aviso.hidden = true;
+  pequeno.classList.remove("lejos");
+
+  if (!datos || datos.estado === "error_api") {
+    texto("Sin conexión con EMT");
+    pequeno.textContent = "Reintentando";
+    return;
+  }
+  if (!datos.buses.length) {
+    const parado = fueraDeServicio();
+    texto(parado ? "Fuera de servicio" : "Sin datos");
+    pequeno.textContent = parado
+      ? "El primer 44 sale de cabecera a las 5:45"
+      : "La EMT no está dando estimaciones ahora";
+    return;
+  }
+
+  const [proximo, siguiente] = datos.buses;
+  const seg = restantes(proximo);
+  if (seg > HORIZONTE) texto("Más de 20 min");
+  else if (seg < 60) texto("Llegando");
+  else cifra(aMinutos(seg));
+
+  if (!siguiente) {
+    pequeno.textContent = "No hay un segundo autobús anunciado";
+  } else {
+    const seg2 = restantes(siguiente);
+    if (seg2 > HORIZONTE) {
+      pequeno.classList.add("lejos");
+      pequeno.innerHTML = "Para el siguiente, <b>más de 20 min</b>";
+    } else {
+      pequeno.innerHTML = "Para el siguiente, <b>" + aMinutos(seg2) + " min</b>";
+    }
+  }
+}
+
+// --- Vuelta: dos bloques en columna, mismo tratamiento ---
+
+function pintarBloque(nodo, datos, clave, esSalida) {
+  const { texto, cifra } = relojDe(nodo);
+  const hora = nodo.querySelector("[data-hora]");
+  const pequeno = nodo.querySelector("[data-pequeno]");
+  pequeno.classList.remove("lejos");
+  hora.textContent = "";
+
+  if (!datos || datos.estado === "error_api") {
+    texto("Sin datos");
+    pequeno.textContent = "";
+    return;
+  }
+  if (!datos.buses.length) {
+    texto(fueraDeServicio() ? "Sin servicio" : "Sin datos");
+    pequeno.textContent = "";
+    return;
+  }
+
+  const [proximo, siguiente] = datos.buses;
+  const seg = restantes(proximo);
+
+  if (seg > HORIZONTE) texto("+20 min");
+  else if (seg < 60) texto(esSalida ? "Saliendo" : "Llegando");
+  else cifra(aMinutos(seg));
+
+  if (seg <= HORIZONTE) {
+    hora.textContent = (esSalida ? "a las " : "sobre las ")
+      + hhmm(horaFija(clave + "-1", proximo.segundos));
+  }
+
+  if (!siguiente) {
+    pequeno.textContent = "Sin más datos";
+  } else {
+    const seg2 = restantes(siguiente);
+    if (seg2 > HORIZONTE) {
+      pequeno.classList.add("lejos");
+      pequeno.innerHTML = "Siguiente, <b>+20 min</b>";
+    } else {
+      pequeno.innerHTML = "Siguiente, <b>"
+        + hhmm(horaFija(clave + "-2", siguiente.segundos)) + "</b>";
+    }
+  }
+}
+
+function fueraDeServicio() {
+  const h = parseInt(new Date().toLocaleTimeString("es-ES",
+    { hour12: false, hour: "2-digit", timeZone: "Europe/Madrid" }), 10);
+  return h < 5;
+}
+
+function repintar() {
+  if (!estado) return;
+  const edad = Date.now() - recibido;
+  document.body.classList.toggle("rancio", edad > RANCIO);
+
+  pintarIda(estado.ida);
+
+  const vuelta = estado.vuelta || null;
+  pintarBloque(nodos.llegadas, vuelta && vuelta.llegadas, "lleg", false);
+  pintarBloque(nodos.salidas, vuelta, "sal", true);
+
+  const aviso = nodos.vuelta.querySelector("[data-aviso]");
+  aviso.hidden = !(vuelta && vuelta.estado === "programado");
+  if (!aviso.hidden) aviso.textContent = "Horario programado, no en tiempo real";
+
+  document.getElementById("sello").textContent = edad > RANCIO
+    ? "Sin actualizar desde las " + hhmm(new Date(recibido))
+    : "Actualizado a las " + hhmm(new Date(recibido));
+}
+
+const boton = document.getElementById("refrescar");
+
+async function sondear(manual) {
+  // Un boton que no da senal parece roto: mientras dura la peticion
+  // cambia de texto y se deshabilita.
+  if (manual) {
+    boton.disabled = true;
+    boton.textContent = "Actualizando…";
+  }
+  const desde = Date.now();
+  try {
+    const r = await fetch(API, { cache: "no-store" });
+    const j = await r.json();
+    if (j.error) throw new Error(j.error);
+    estado = j;
+    recibido = Date.now();
+    repintar();
+    if (manual) document.getElementById("sello").textContent =
+      "Actualizado ahora, a las " + hhmm(new Date(recibido));
+  } catch (e) {
+    if (!estado) {
+      document.getElementById("sello").textContent = "Sin conexión";
+      pintarIda(null);
+      pintarBloque(nodos.llegadas, null, "lleg", false);
+      pintarBloque(nodos.salidas, null, "sal", true);
+    } else {
+      repintar();
+      if (manual) document.getElementById("sello").textContent =
+        "No se pudo actualizar";
+    }
+  } finally {
+    if (manual) {
+      // Medio segundo minimo de espera visible: si la respuesta llega
+      // en 80 ms, el cambio de texto no se percibe y parece que nada paso.
+      const resta = 500 - (Date.now() - desde);
+      if (resta > 0) await new Promise((r) => setTimeout(r, resta));
+      boton.disabled = false;
+      boton.textContent = "Actualizar";
+    }
+  }
+}
+
+function arrancar() {
+  clearInterval(temporizador);
+  sondear();
+  temporizador = setInterval(sondear, PERIODO);
+}
+
+setInterval(repintar, 1000);
+boton.addEventListener("click", () => sondear(true));
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) clearInterval(temporizador);
+  else { horaFijada.clear(); arrancar(); }
+});
+
+arrancar();
+</script>
+</body>
+</html>

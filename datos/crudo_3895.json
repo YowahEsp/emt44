@@ -1,0 +1,74 @@
+{
+  "code": "00",
+  "description": " Data recovered OK  (lapsed: 230 millsecs)",
+  "datetime": "2026-09-04T20:32:55.642028",
+  "data": [
+    {
+      "Arrive": [
+        {
+          "line": "44",
+          "stop": "3895",
+          "isHead": "False",
+          "destination": "CALLAO",
+          "deviation": 0,
+          "bus": 5657,
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -3.708629213808626,
+              40.461436962866514
+            ]
+          },
+          "estimateArrive": 547,
+          "DistanceBus": 382,
+          "positionTypeBus": "0"
+        },
+        {
+          "line": "44",
+          "stop": "3895",
+          "isHead": "False",
+          "destination": "CALLAO",
+          "deviation": 0,
+          "bus": 5638,
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -3.7086349327561763,
+              40.44890101094435
+            ]
+          },
+          "estimateArrive": 1507,
+          "DistanceBus": 2387,
+          "positionTypeBus": "0"
+        }
+      ],
+      "StopInfo": [
+        {
+          "lines": [
+            {
+              "label": "44",
+              "line": "044",
+              "nameA": "CALLAO",
+              "nameB": "MARQUES DE VIANA",
+              "metersFromHeader": 0,
+              "to": "A",
+              "color": "0072ce"
+            }
+          ],
+          "stopId": "3895",
+          "stopName": "Marqués de Viana",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -3.705966303858864,
+              40.46407652555645
+            ]
+          },
+          "Direction": "Marqués de Viana con Pº de la Dirección                "
+        }
+      ],
+      "ExtraInfo": [],
+      "Incident": {}
+    }
+  ]
+}

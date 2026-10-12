@@ -1,0 +1,74 @@
+{
+  "code": "00",
+  "description": " Data recovered OK  (lapsed: 208 millsecs)",
+  "datetime": "2026-09-04T20:32:54.767618",
+  "data": [
+    {
+      "Arrive": [
+        {
+          "line": "44",
+          "stop": "1670",
+          "isHead": "False",
+          "destination": "MARQUES DE VIANA",
+          "deviation": 0,
+          "bus": 5638,
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -3.7086349327561763,
+              40.44890101094435
+            ]
+          },
+          "estimateArrive": 45,
+          "DistanceBus": 121,
+          "positionTypeBus": "0"
+        },
+        {
+          "line": "44",
+          "stop": "1670",
+          "isHead": "False",
+          "destination": "MARQUES DE VIANA",
+          "deviation": 0,
+          "bus": 5658,
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -3.711500448123522,
+              40.42429797539004
+            ]
+          },
+          "estimateArrive": 1109,
+          "DistanceBus": 3384,
+          "positionTypeBus": "0"
+        }
+      ],
+      "StopInfo": [
+        {
+          "lines": [
+            {
+              "label": "44",
+              "line": "044",
+              "nameA": "CALLAO",
+              "nameB": "MARQUES DE VIANA",
+              "metersFromHeader": 4822,
+              "to": "B",
+              "color": "0072ce"
+            }
+          ],
+          "stopId": "1670",
+          "stopName": "Rubio y Galí-Jerónima Llorente",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              -3.709770749027614,
+              40.45235055261084
+            ]
+          },
+          "Direction": "Av. Doctor Federico Rubio y Galí, 56                   "
+        }
+      ],
+      "ExtraInfo": [],
+      "Incident": {}
+    }
+  ]
+}
