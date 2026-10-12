@@ -28,5 +28,5 @@ Despliegue manual de reserva, desde la carpeta del proyecto:
 
 ```sh
 npx wrangler deploy                                         # Worker
-npx wrangler pages deploy publico --project-name emt-44     # Panel
+npx wrangler pages deploy publico --project-name emt-44-git # Panel
 ```
