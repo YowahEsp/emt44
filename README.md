@@ -20,7 +20,9 @@ Las credenciales del portal de EMT **no están en el repo**. Están como secreto
 
 ## Despliegue
 
-Con la integración Git, cada push a `main` publica el panel solo. Para Pages: sin comando de compilación, directorio de salida `publico`.
+Con la integración Git, cada push a `main` publica solo el Worker (`emt-44`) y el panel (`emt-44-git.pages.dev`). El panel antiguo `emt-44.pages.dev` queda de reserva y ya no se actualiza.
+
+**No desplegar desde la copia local `~/emt44`**: el código vivo es el de este repo. Para Pages: sin comando de compilación, directorio de salida `publico`.
 
 Despliegue manual de reserva, desde la carpeta del proyecto:
 
